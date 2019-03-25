@@ -52,4 +52,3 @@ RUN { \
 
 
 COPY php.ini /usr/local/etc/php/
-COPY server-signature.conf /etc/apache2/conf-enabled/
