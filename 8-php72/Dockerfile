@@ -1,5 +1,7 @@
 FROM php:7.2-apache
 
+RUN apt-get update -y && apt-get install -y curl wget vim git unzip mysql-client
+
 # install the PHP extensions we need
 RUN set -ex; \
 	\
