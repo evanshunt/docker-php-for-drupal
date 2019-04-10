@@ -1,6 +1,7 @@
 FROM php:7.1-apache
 
-RUN apt-get update -y && apt-get install -y curl wget vim git unzip mysql-client
+RUN apt-get update -y && apt-get install -y curl wget vim git unzip mysql-client libxml2-dev && \
+	docker-php-ext-install soap
 
 # install the PHP extensions we need
 RUN set -ex; \
