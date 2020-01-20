@@ -1,6 +1,6 @@
 FROM php:7.3-apache
 
-RUN apt-get update -y && apt-get install -y curl wget vim git unzip mysql-client libxml2-dev && \
+RUN apt-get update -y && apt-get install -y curl wget vim git unzip default-mysql-client libxml2-dev && \
 	docker-php-ext-install soap
 
 # install the PHP extensions we need
@@ -17,6 +17,7 @@ RUN set -ex; \
 		libjpeg-dev \
 		libpng-dev \
 		libpq-dev \
+		libzip-dev \
 	; \
 	\
 	docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr; \
@@ -26,6 +27,7 @@ RUN set -ex; \
 		pdo_mysql \
 		pdo_pgsql \
 		zip \
+		bcmath \
 	; \
 	\
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
@@ -57,7 +59,7 @@ RUN { \
 COPY php.ini /usr/local/etc/php/
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
+    php -r "if (hash_file('sha384', 'composer-setup.php') === 'c5b9b6d368201a9db6f74e2611495f369991b72d9c8cbd3ffbc63edff210eb73d46ffbfce88669ad33695ef77dc76976') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
     php composer-setup.php && \
     php -r "unlink('composer-setup.php');" && \
     mv composer.phar /usr/local/bin/composer
